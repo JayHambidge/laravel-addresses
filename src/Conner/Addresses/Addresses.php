@@ -169,7 +169,9 @@ class Addresses {
 	private function getFlag($flag, $userId=null) {
 		$userId = $userId ?: self::userId();
 
-		if(empty($userId)) { return null; }
+		if(empty($userId)) {
+            return null;
+        }
 		
 		return Address::where('user_id', '=', $userId)
 			->where('is_'.$flag, true)
