@@ -1,7 +1,7 @@
 <?php
 
 use Conner\Addresses\Country;
-
+use Illuminate\Database\Seeder;
 class CountryTableSeeder extends Seeder {
 
 	private $insertList = array(

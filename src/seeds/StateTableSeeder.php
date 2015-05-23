@@ -1,6 +1,7 @@
 <?php
 
 use Conner\Addresses\State;
+use Illuminate\Database\Seeder;
 
 class StateTableSeeder extends Seeder {
 

@@ -35,13 +35,13 @@ class Controller extends \Illuminate\Routing\Controller {
 	 * Show all addresses for the current user
 	 */
 	public function getIndex() {
-		echo \View::make('addresses::index', array(
+		return \View::make('addresses::index', array(
 			'addresses'=>\Addresses::getAll()
 		));
 	}
 	
 	public function getCreate() {
-		echo \View::make('addresses::create', array(
+		return \View::make('addresses::create', array(
 			'address'=>new Address()
 		));
 	}
@@ -63,7 +63,7 @@ class Controller extends \Illuminate\Routing\Controller {
 	}
 	
 	public function getEdit(Address $address) {
-		echo \View::make('addresses::edit', array(
+		return \View::make('addresses::edit', array(
 			'address'=>$address,
 		));
 	}
