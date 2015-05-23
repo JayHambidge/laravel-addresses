@@ -1,5 +1,5 @@
 {
-    "name": "rtconner/laravel-addresses",
+    "name": "mikenolimits/laravel-addresses",
     "description": "Helps you build multiple address storage like Amazon and PayPal have",
 	"license": "MIT",
 	"homepage": "https://smartersoftware.net/packages/laravel-address-book",
