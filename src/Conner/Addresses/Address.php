@@ -12,7 +12,7 @@ class Address extends \Eloquent {
 		parent::boot();
 
 		static::saving(function($address) {
-			if(\Config::get('addresses::geocode')) {
+			if(\Config::get('addresses.geocode')) {
 				$address->geocode();
 			}
 		});
@@ -57,7 +57,7 @@ class Address extends \Eloquent {
 			return $this->attributes['country_a2'];
 		}
 
-		return \Config::get('addresses::default_country');
+		return \Config::get('addresses.default_country');
 	}
     
     public function setCountryNameAttribute() {
