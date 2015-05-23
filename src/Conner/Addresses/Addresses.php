@@ -54,7 +54,7 @@ class Addresses {
 		}
 		
 		$address->fill($data);
-		$flags = \Config::get('addresses::flags');
+		$flags = \Config::get('addresses.flags');
 		foreach($flags as $flag) {
 			if(array_key_exists('is_'.$flag, $data)) {
 				$address->{'is_'.$flag} = $data['is_'.$flag];
@@ -113,7 +113,7 @@ class Addresses {
 	
 			$builder = Address::where('user_id', $userId);
 			
-			$flags = \Config::get('addresses::flags');
+			$flags = \Config::get('addresses.flags');
 			foreach($flags as $flag) {
 				$builder->orderBy('is_'.$flag, 'DESC');
 			}
@@ -139,7 +139,7 @@ class Addresses {
 	}
 	
 	public function __call($name, $arguments) {
-		$flags = \Config::get('addresses::flags');
+		$flags = \Config::get('addresses.flags');
 
 		foreach($flags as $flag) {
 			if($name == 'get'.ucfirst($flag)) {
@@ -305,7 +305,7 @@ class Addresses {
 	}
 	
 	private function checkFlags($address) {
-		$flags = \Config::get('addresses::flags');
+		$flags = \Config::get('addresses.flags');
 		foreach($flags as $flag) {
 			if($address->{'is_'.$flag}) {
 				self::setFlag($flag, $address);
@@ -318,7 +318,7 @@ class Addresses {
 			return self::$userId;
 		}
 		
-		if($user = call_user_func(\Config::get('addresses::user.current'))) {
+		if($user = call_user_func(\Config::get('addresses.user.current'))) {
 			self::$userId = $user->id;
 			return self::$userId;
 		}
