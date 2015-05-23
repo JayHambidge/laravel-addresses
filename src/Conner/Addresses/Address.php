@@ -2,11 +2,11 @@
 
 class Address extends \Eloquent {
 
-	protected $table = 'addresses';
-	public $timestamps = false;
+	protected $table    = 'addresses';
+	public $timestamps  = false;
 	protected $fillable = array('addressee', 'organization', 'street', 'street_extra', 'city', 'state', 'zip', 'country', 'phone');
-	protected $guarded = array('id', 'state_a2', 'country_a2', 'state_name', 'country_name', 'user_id');
-	protected $appends = array('state', 'country');
+	protected $guarded  = array('id', 'state_a2', 'country_a2', 'state_name', 'country_name', 'user_id');
+	protected $appends  = array('state', 'country');
 
 	public static function boot() {
 		parent::boot();
@@ -27,7 +27,7 @@ class Address extends \Eloquent {
 			'zip'=>'required|AlphaDash|Min:5|Max:10', // https://www.barnesandnoble.com/help/cds2.asp?PID=8134
 		);
 		
-		if(\Config::get('addresses::show_country')) {
+		if(\Config::get('addresses.show_country')) {
 			$rules['country_a2'] = 'required|Alpha|size:2';
 		}
 		

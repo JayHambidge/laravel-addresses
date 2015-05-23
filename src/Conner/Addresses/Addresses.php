@@ -182,16 +182,20 @@ class Addresses {
 	 *
 	 * @param mixed $objectOrId primary address id or object instance
 	 */
-	private function setFlag($flag, $address) {
-		if(!is_object($address)) {
+	private function setFlag($flag,$address) {
+		if(is_int($address)) {
 			$address = Address::find($address);
 		}
-		
-		if($userId = $address->user_id) {
-			Address::where('user_id', '=', self::userId())->update(array('is_'.$flag=>false));
-			$address->{'is_'.$flag} = true;
-			$address->save();
-		}
+        //Set the rest to 0
+        $opts = \Config::get('addresses.flags');
+
+        foreach($opts as $f) {
+            $flag           =  "is_$f";
+            $address->$flag = 0;
+        }
+        //Set the new flag to 1
+		$address->{'is_'.$flag} = 1;
+		$address->save();
 	}
 	
 	/**
@@ -304,16 +308,16 @@ class Addresses {
 		return \Form::select($name, $list, $selected, $options);
 	}
 	
-	private function checkFlags($address) {
+	private function checkFlags(Address $address) {
 		$flags = \Config::get('addresses.flags');
 		foreach($flags as $flag) {
-			if($address->{'is_'.$flag}) {
+			if($address->{'is_'.$flag} === 1) {
 				self::setFlag($flag, $address);
 			}
 		}
 	}
 	
-	private function userId($requred=true) {
+	private function userId($required = true) {
 		if(self::$userId) {
 			return self::$userId;
 		}
@@ -323,7 +327,7 @@ class Addresses {
 			return self::$userId;
 		}
 
-		if($requred) {
+		if($required) {
 			throw new NotLoggedInException;
 		}
 		return null;
