@@ -177,28 +177,7 @@ class Addresses {
 			->where('is_'.$flag, true)
 			->first();
 	}
-	
-	/**
-	 * Set value of a flag. Unsets all other addresses for that user.
-	 * Called by using Addresses::setFlagname($address)
-	 *
-	 * @param mixed $objectOrId primary address id or object instance
-	 */
-	private function setFlag($flag,$address) {
-		if(is_int($address)) {
-			$address = Address::find($address);
-		}
-        //Set the rest to 0
-        $opts = \Config::get('addresses.flags');
 
-        foreach($opts as $f) {
-            $flag           =  "is_$f";
-            $address->$flag = 0;
-        }
-        //Set the new flag to 1
-		$address->{'is_'.$flag} = 1;
-		$address->save();
-	}
 	
 	/**
 	 * Return collection of all countries
@@ -318,6 +297,26 @@ class Addresses {
 			}
 		}
 	}
+
+    /**
+     * Set value of a flag. Unsets all other addresses for that user.
+     * Called by using Addresses::setFlagname($address)
+     *
+     * @param mixed $objectOrId primary address id or object instance
+     */
+    private function setFlag($flag,$address) {
+        if(is_int($address)) {
+            $address = Address::find($address);
+        }
+
+        //Set Other Same Flags To 0
+        Address::where('user_id', '=', self::userId())
+            ->update(['is_'.$flag => 0]);
+
+        //Set the new flag to 1
+        $address->{'is_'.$flag} = 1;
+        $address->save();
+    }
 	
 	private function userId($required = true) {
 		if(self::$userId) {
