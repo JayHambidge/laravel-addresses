@@ -61,7 +61,7 @@
     </div>
 </div>
 
-@foreach(\Config::get('addresses::flags') as $flag)
+@foreach(\Config::get('addresses.flags') as $flag)
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-8">
