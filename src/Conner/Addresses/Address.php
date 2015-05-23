@@ -104,7 +104,7 @@ class Address extends \Eloquent {
     	}
     }
     
-    function toHtml($separator='<br />') {
+    public function toHtml($separator='<br />') {
     	$html = array();
     	foreach(array('addressee', 'organization', 'street', 'street_extra') as $line) {
 			if(strlen($this->{$line})) {
