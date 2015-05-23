@@ -13,16 +13,18 @@ class AddressesServiceProvider extends ServiceProvider {
 	 * Bootstrap the application events.
 	 */
 	public function boot() {
-        $configPath     = base_path('vendor/rtconner/laravel-addresses/src/config/config.php');
-        $viewsPath      = base_path('vendor/rtconner/laravel-addresses/src/views');
-        $migrationsPath = base_path('vendor/rtconner/laravel-addresses/src/migrations');
-        $seedsPath      = base_path('vendor/rtconner/laravel-addresses/src/migrations/seeds');
+        $configPath     = base_path('vendor/drapor/laravel-addresses/src/config/config.php');
+        $viewsPath      = base_path('vendor/drapor/laravel-addresses/src/views');
+        $migrationsPath = base_path('vendor/drapor/laravel-addresses/src/migrations');
+        $seedsPath      = base_path('vendor/drapor/laravel-addresses/src/seeds');
 
         $this->publishes([$migrationsPath => database_path().'/migrations']);
         $this->publishes([$seedsPath      => database_path().'/seeds']);
         $this->publishes([$configPath     => config_path('addresses.php')], 'config');
-        \View::addNamespace('addresses',$viewsPath);
-        $this->loadViewsFrom($viewsPath, 'Addresses');
+
+        //\View::addNamespace('addresses',$viewsPath);
+        $this->loadViewsFrom($viewsPath, 'addresses');
+        $this->publishes([$viewsPath => base_path('resources/views/addresses')]);
 	}
 	
 	/**
